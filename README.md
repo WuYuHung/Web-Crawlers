@@ -1,5 +1,10 @@
 # Web-Crawlers
 
+## 爬取語言與套件
+
+100% Python
+使用套件：requests, BeautifulSoup, pandas
+
 ## chatbot-abilites:
 此部份有包含語意分析的功能，也就是可作為聊天機器人的分支。
 每個子資料夾內的try it.txt即為測試資料
