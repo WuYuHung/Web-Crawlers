@@ -4,13 +4,13 @@
 此部份有包含語意分析的功能，也就是可作為聊天機器人的分支。
 每個子資料夾內的try it.txt即為測試資料
 
-### brain-storm: 腦筋急轉彎
+#### brain-storm: 腦筋急轉彎
 
-### colories: 食物熱量查詢
+#### colories: 食物熱量查詢
 
-### gas-station: 加油站查詢
+#### gas-station: 加油站查詢
 
-### rate-exchange: 匯率計算
+#### rate-exchange: 匯率計算
 
 其中匯率計算算是我做起來最有心得的。
 
