@@ -3,12 +3,18 @@ import getpass
 from lxml import html
 from bs4 import BeautifulSoup
 
+# should not modify
 session = requests.Session()
-USER = 'B10630040'
-PASSWORD = getpass.getpass("請輸入密碼：")
+USER = input('請輸入Moodle帳號：')
+PASSWORD = getpass.getpass('請輸入密碼：')
 LOGIN_URL = 'https://moodle.ntust.edu.tw/login/'
 
-post_data = {'username': USER, 'password': PASSWORD}
+# get token
+result = session.get(LOGIN_URL)
+tree = html.fromstring(result.text)
+logintoken = list(set(tree.xpath('//input[@name="logintoken"]/@value')))[0]
+
+post_data = {'username': USER, 'password': PASSWORD, 'logintoken': logintoken}
 
 html_post = session.post(LOGIN_URL, post_data)
 
@@ -28,11 +34,12 @@ try:
 
     new_request = session.post(class_url, post_data)
     soup = BeautifulSoup(new_request.text, 'html.parser')
-    user_list = []
+    user_list = list()
     for i in soup.find_all('a'):
         if '@ ' in str(i.string) and '老師' not in str(i.string):
             user_list.append(i.string.replace('@', ' '))
     user_list.sort()
+    print('包含助教共計 {length} 人'.format(length=len(user_list)))
     print(*user_list, sep = '\n')
 except:
-    print("您的輸入有誤，或是權限不足！！")
+    print('您的輸入有誤，或是權限不足！！（若您無選修該堂課，無法查詢）')
