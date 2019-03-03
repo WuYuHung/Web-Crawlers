@@ -1,5 +1,6 @@
 import requests
 import getpass
+import sys
 from lxml import html
 from bs4 import BeautifulSoup
 
@@ -10,7 +11,11 @@ PASSWORD = getpass.getpass('請輸入密碼：')
 LOGIN_URL = 'https://moodle.ntust.edu.tw/login/'
 
 # get token
-result = session.get(LOGIN_URL)
+try:
+    result = session.get(LOGIN_URL, timeout=3)
+except requests.exceptions.ReadTimeout:
+    print('連線超時，可能是學校Moodle的server掛了或者你的連線品質太差！(當前timeout設定：3 seconds)')
+    sys.exit()
 tree = html.fromstring(result.text)
 logintoken = list(set(tree.xpath('//input[@name="logintoken"]/@value')))[0]
 
